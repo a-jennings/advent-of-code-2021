@@ -1,47 +1,40 @@
-TEST_INPUT = '00100
-11110
-10110
-10111
-10101
-01111
-00111
-11100
-10000
-11001
-00010
-01010'
-
 file = File.open('input.txt')
 input = file.read
-data_array = []
-input.lines do |line|
-    data_array << line.strip
+
+
+def oxygen_carbon_levels(input, gas_type)
+    data = []
+    input.lines do |line|
+        data << line.strip
+    end
+    data.first.length.times do |index|
+        if data.length == 2
+            if data[0][index] != data[1][index]
+                data.delete_if { |binary| binary[index] == (gas_type == 'oxygen' ? '0' : '1')}
+                break
+            end
+        end
+        zero_count = 0
+        one_count = 0
+        max = ''
+        data.each do |binary|
+            binary[index] == '0' ? zero_count += 1 : one_count += 1
+        end
+        zero_count > one_count ? max = '0' : max = '1'
+        zero_count < one_count ? min = '0' : min = '1'
+        data.delete_if { |binary| binary[index] != (gas_type == 'oxygen' ? max : min)}
+    end
+    data.first.to_i(2)
 end
-p data_array
+
+p oxygen_carbon_levels(input, 'oxygen') * oxygen_carbon_levels(input, 'carbon')
+
+
+
 
 # OXYGEN
 
-data_array.first.length.times do |index|
-    if data_array.length == 2
-        p "INDEX = #{index}"
-        if data_array[0][index] != data_array[1][index]
-            data_array.delete_if { |binary| binary[index] == '0'}
-            break
-        end
-    end
-    zero_count = 0
-    one_count = 0
-    max = ''
-    data_array.each do |binary|
-        binary[index] == '0' ? zero_count += 1 : one_count += 1
-    end
-    zero_count > one_count ? max = '0' : max = '1'
-    p "MAX = #{max} === ZERO  #{zero_count}   ONE #{one_count}"
-    p '== DELETING == '
-    data_array.delete_if { |binary| binary[index] != max}
-    p data_array
-end
-p data_array.first.to_i(2)
+
 
 # CO2
 
