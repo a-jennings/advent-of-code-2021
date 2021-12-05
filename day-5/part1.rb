@@ -28,7 +28,7 @@ def vent_check(coord)
         range = ([x1, x2].min..[x1, x2].max).to_a
         range.each do |x|
             vents << [x,y1]
-        end  
+        end
     end
     vents
 end
@@ -44,4 +44,19 @@ coords.each do |coord|
     vents += vent_check(coord) if !vent_check(coord).empty?
 end
 
-p vents.length - vents.uniq.length
+hash = {}
+dupes = []
+
+vents.each do |vent|
+    if hash.has_key?(vent)
+        hash[vent] += 1
+    else
+        hash[vent] = 1
+    end
+end
+
+hash.each do |key, value|
+    dupes << [key,value] if value > 1
+end
+
+p dupes.length
