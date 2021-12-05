@@ -1,5 +1,6 @@
 file = File.open('input.txt')
 input = file.read
+start_time = Time.now
 
 def input_conversion(input_line)
     x = input_line.match(/(\d+,\d+)/).to_s
@@ -59,4 +60,6 @@ hash.each do |key, value|
     dupes << [key,value] if value > 1
 end
 
-p dupes.length
+puts "Number of crossover points: #{dupes.length}"
+end_time = Time.now
+puts "Execution time: #{(end_time.to_f - start_time.to_f).round(2)}s"
