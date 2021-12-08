@@ -1,3 +1,4 @@
+start_time = Time.now
 file = File.open('input.txt')
 input = file.read
 
@@ -94,4 +95,5 @@ input.lines do |line|
     total += final_num
 end
 
-p total
+puts "Answer: #{total}"
+puts "Execution time: #{(Time.now - start_time).to_f.round(6)}s"
