@@ -41,41 +41,43 @@ def number_solver(str)
     end
 
     data = str.split
+    data = data.map { |chars| chars.chars.sort.join}
+
     numbers = {1=> nil, 2=> nil, 3=> nil, 4=> nil, 5=> nil, 6=> nil, 7=> nil, 8=> nil, 9=> nil}
     # Get easily defined numbers
     data.each do |chars|
         case chars.length
         when 2
-            numbers[1] = chars.chars.sort.join
+            numbers[1] = chars
         when 3
-            numbers[7] = chars.chars.sort.join
+            numbers[7] = chars
         when 4
-            numbers[4] = chars.chars.sort.join
+            numbers[4] = chars
         when 7
-            numbers[8] = chars.chars.sort.join
+            numbers[8] = chars
         end
     end
     # Find six
     six_data = data.filter { |chars| chars.length == 6}
-    numbers[6] = find_six(six_data, numbers[1]).first.chars.sort.join
+    numbers[6] = find_six(six_data, numbers[1]).first
 
     # Find zero and nine
     zero_nine_data = data.filter { |chars| chars.length == 6}
     zero_nine_data.delete(numbers[6])
     zero_nine = find_zero_nine(zero_nine_data, numbers[4])
-    numbers[0] = zero_nine.first.chars.sort.join
-    numbers[9] = zero_nine.last.chars.sort.join
+    numbers[0] = zero_nine.first
+    numbers[9] = zero_nine.last
 
     # Find two
     two_data = data.filter { |chars| chars.length == 5 }
-    numbers[2] = find_two(two_data, numbers[9]).chars.sort.join
+    numbers[2] = find_two(two_data, numbers[9])
 
     # Find three and five
     three_five_data = data.filter { |chars| chars.length == 5 }
     three_five_data.delete(numbers[2])
     three_five = find_three_five(three_five_data, numbers[1])
-    numbers[3] = three_five.first.chars.sort.join
-    numbers[5] = three_five.last.chars.sort.join
+    numbers[3] = three_five.first
+    numbers[5] = three_five.last
     numbers
 end
 
@@ -89,7 +91,6 @@ input.lines do |line|
         num_str << numbers.key(str.chars.sort.join)
     end
     final_num = num_str.last + (num_str.first * 1000) + (num_str[1] * 100) + (num_str[2] * 10)
-    p final_num
     total += final_num
 end
 
