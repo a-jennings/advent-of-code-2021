@@ -1,3 +1,4 @@
+start_time = Time.now
 file = File.open('input.txt')
 input = file.read
 
@@ -54,4 +55,6 @@ input.lines do |line|
     chars = line.strip
     arr << line_check(line)
 end
-p arr.sum
+
+puts "Answer: #{arr.sum}"
+puts "Execution time: #{(Time.now - start_time).to_f.round(6)}s"

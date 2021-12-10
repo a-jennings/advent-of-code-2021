@@ -1,3 +1,4 @@
+start_time = Time.now
 file = File.open('input.txt')
 input = file.read
 
@@ -75,4 +76,6 @@ output_arr.delete(nil)
 all_scores = output_arr.map do |output|
     score(output)
 end
-p all_scores.sort[all_scores.length/2]
+
+puts "Answer: #{all_scores.sort[all_scores.length/2]}"
+puts "Execution time: #{(Time.now - start_time).to_f.round(6)}s"
