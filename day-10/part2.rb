@@ -18,40 +18,61 @@ def line_check(line)
             if legal_chars[0] == ')'
                 legal_chars.delete_at(0)
             else
-                return 3
+                return nil
                 break
             end
         when ']'
             if legal_chars[0] == ']'
                 legal_chars.delete_at(0)
             else
-                return 57
+                return nil
                 break
             end
         when '}'
             if legal_chars[0] == '}'
                 legal_chars.delete_at(0)
             else
-                return 1197
+                return nil
                 break
             end
         when '>'
             if legal_chars[0] == '>'
                 legal_chars.delete_at(0)
             else
-                return 25137
+                return nil
                 break
             end
-        else
-            return 0
         end
-    
     end
+    return legal_chars
 end
 
-arr = []
-input.lines do |line|
-    chars = line.strip
-    arr << line_check(line)
+def score(arr)
+    score = 0
+    arr.each do |char|
+        score *= 5
+        case char
+        when ')'
+            score += 1
+        when ']'
+            score += 2            
+        when '}'
+            score += 3
+        when '>'
+            score += 4
+        end
+    end
+    return score
 end
-p arr.sum
+
+output_arr = []
+input.lines do |line|
+    output_arr << line_check(line.strip)
+end
+
+output_arr.delete(nil)
+
+all_scores = output_arr.map do |output|
+    score(output)
+end
+p all_scores.sort[all_scores.length/2]
